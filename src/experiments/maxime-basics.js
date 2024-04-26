@@ -3,8 +3,8 @@ import { OrbitControls } from "@react-three/drei";
 import { useMemo, useRef } from "react";
 import { MathUtils } from "three";
 
-import vertexShader from "!!raw-loader!glslify-loader!@/experiments/maxime-basics.vert";
-import fragmentShader from "!!raw-loader!glslify-loader!@/experiments/maxime-basics.frag";
+import vertexShader from "!!raw-loader!glslify-loader!@/experiments/shaders/maxime-basics.vert";
+import fragmentShader from "!!raw-loader!glslify-loader!@/experiments/shaders/maxime-basics.frag";
 
 
 

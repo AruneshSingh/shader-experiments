@@ -3,12 +3,12 @@ import { OrbitControls } from "@react-three/drei";
 import { useMemo, useRef, useCallback, useEffect } from "react";
 import { Vector2, Color } from "three";
 
-import vertexShader from "!!raw-loader!glslify-loader!@/experiments/shaders/shader-paint.vert";
-import fragmentShader from "!!raw-loader!glslify-loader!@/experiments/shaders/shader-paint.frag";
+import vertexShader from "!!raw-loader!glslify-loader!@/experiments/shaders/bookOfShaders/bos.vert";
+import fragmentShader from "!!raw-loader!glslify-loader!@/experiments/shaders/bookOfShaders/bos1.frag";
 
 
 
-const ShaderPaint = () => {
+const PaintCanvas = () => {
     // This reference will give us direct access to the mesh
   const mesh = useRef();
   const mousePosition = useRef({ x: 0, y: 0 });
@@ -19,18 +19,16 @@ const ShaderPaint = () => {
 
   const uniforms = useMemo(
     () => ({
-      u_time: {
-        value: 0.0,
-      },
+      u_time: { value: 0.0 },
+      u_resolution: { value: new Vector2(0, 0)}, // TODO: figure out how to get this dynamically
       u_mouse: { value: new Vector2(0, 0) },
-      u_bg: {
-        value: new Color("#A1A3F7"),
-      },
+      u_bg: { value: new Color("#A1A3F7") },
       u_colorA: { value: new Color("#9FBAF9") },
       u_colorB: { value: new Color("#FEB3D9") },
     }),
     []
   );
+
 
   useEffect(() => {
     window.addEventListener("mousemove", updateMousePosition, false);
@@ -52,7 +50,7 @@ const ShaderPaint = () => {
 
   return (
     <mesh ref={mesh} position={[0, 0, 0]} scale={1.5}>
-      <planeGeometry args={[1, 1, 32, 32]} />
+      <planeGeometry args={[1, 1]} />
       <shaderMaterial
         fragmentShader={fragmentShader}
         vertexShader={vertexShader}
@@ -63,10 +61,10 @@ const ShaderPaint = () => {
   );
 };
   
-export default function Basics() {
+export default function BookOfShaders() {
     return (
-      <Canvas camera={{ position: [0.0, 0.0, 1.5] }}>
-        <ShaderPaint />
+      <Canvas camera={{ position: [0.0, 0.0, 1.0] }}>
+        <PaintCanvas />
     </Canvas>
     );
 }
