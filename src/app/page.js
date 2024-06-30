@@ -16,11 +16,13 @@ import BookOfShaders from "@/experiments/bookOfShaders";
  
 export default function Home() {
   return (
-    <main className="flex h-[1000px] flex-col items-center justify-between p-24 bg-white">
-      {/* <FiberDemo/> */}
-      {/* <Basics/> */}
-      {/* <ShaderPaint /> */}
-      <BookOfShaders />
+    <main className="flex h-screen flex-col items-center justify-between bg-white">
+      <div className="w-[800px] h-[800px] m-24 rounded-lg overflow-hidden">
+        {/* <FiberDemo/> */}
+        {/* <Basics/> */}
+        {/* <ShaderPaint /> */}
+        <BookOfShaders />
+      </div>
     </main>
   );
 }

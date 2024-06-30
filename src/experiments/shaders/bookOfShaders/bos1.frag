@@ -28,29 +28,39 @@ float doubleCubicSeat (float x, float a, float b){
   a = min(max_param_a, max(min_param_a, a));  
   b = min(max_param_b, max(min_param_b, b)); 
   
-  float y = 0;
+  float y = 0.0;
   if (x <= a){
-    y = b - b*pow(1-x/a, 3.0);
+    y = b - b*pow(1.0-x/a, 3.0);
   } else {
-    y = b + (1-b)*pow((x-a)/(1-a), 3.0);
+    y = b + (1.0-b)*pow((x-a)/(1.0-a), 3.0);
   }
   return y;
 }
 
 void main() {
   vec2 st = vUv;
-  
-  float y = doubleCubicSeat(st.x,0.6,0.2);
+
+  // Using u_time to animate the 'a' parameter
+  float a = sin(u_time) * 0.5 + 0.5;
+
+
+  //Trying out various functions for y
+
+  float y = doubleCubicSeat(st.x,a,0.2);
   // float y = step(0.5,st.x);
   // float y = smoothstep(0.1,0.9,st.x);
-  // float y = pow(st.x,5.0)
+  // float y = pow(st.x,a);
   // float y = abs(sin(u_time * st.x));
 
-  vec3 color = vec3(y);
 
-  // Plot a line
-  float pct = plot(st,y);
-  color = (1.0-pct)*color+pct*vec3(0.0,1.0,0.0);
+  //Mix the two colours according the function defined for y
+  vec3 color = mix(u_colorA, u_colorB, y);
 
-	gl_FragColor = vec4(color,1.0);
+  // Plot the line for the function above
+  float pct = plot(st, y);
+
+  //Merge the color and line plot
+  color = mix(color, vec3(0.0, 1.0, 0.0), pct);
+
+	gl_FragColor = vec4(color, 1.0);
 }
